@@ -84,6 +84,16 @@ function binarySearch(){
 		return null;
 	}
 	
+	var findMinNode = function(node){
+		if(node){
+			while(node && node.left !== null){
+				node = node.left;
+			}
+			return node;
+		}
+		return null;
+	} 
+	
 	//寻找树中的最大值
 	this.max = function(){
 		return maxNode(root);
@@ -113,6 +123,44 @@ function binarySearch(){
 			return searchNode(node.right,key);
 		}else {
 			return true;
+		}
+	}
+	
+	//移除一个节点
+	this.remove = function(key){
+		root = removeNode(root,key);
+	}
+	
+	var removeNode = function(node,key){
+		if(node === null){
+			return null;
+		}
+		if(key<node.key){
+			node.left = removeNode(node.left,key);
+			return node;
+		}else if(key > node.key){
+			node.right = removeNode(node.right,key);
+			return node;
+		}else{
+			//第一种情况 一个叶节点
+			if(node.left === null && node.right === null){
+				node = null;
+				return node;
+			}
+			//第二种情况 有一个子节点的节点
+			if(node.left === null){
+				node = node.right;
+				return node;
+			}else if(node.right === null){
+				node = node.left;
+				return node;
+			}
+			
+			//第三种情况
+			var aux = findMinNode(node.right);
+			node.key = aux.key;
+			node.right = removeNode(node.right,aux.key);
+			return node;
 		}
 	}
 }
