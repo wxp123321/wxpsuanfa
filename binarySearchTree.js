@@ -68,8 +68,54 @@ function binarySearch(){
 			callback(node.key);
 		}
 	}
+	
+	//寻找树中的最小值
+	this.min = function(){
+		return minNode(root);
+	}
+	
+	var minNode = function(node){
+		if(node){
+			while(node && node.left !== null){
+				node = node.left;
+			}
+			return node.key;
+		}
+		return null;
+	}
+	
+	//寻找树中的最大值
+	this.max = function(){
+		return maxNode(root);
+	}
+	
+	var maxNode = function(node){
+		if(node){
+			while(node && node.right!== null){
+				node = node.right;
+			}
+			return node.key;
+		}
+		return null;
+	}
+	
+	//搜索一个特定的值
+	this.search = function(key){
+		return searchNode(root,key);
+	}
+	var searchNode = function(node,key){
+		if(node === null){
+			return false;
+		}
+		if(key < node.key){
+			return searchNode(node.left,key);
+		}else if(key > node.key){
+			return searchNode(node.right,key);
+		}else {
+			return true;
+		}
+	}
 }
-
 
 var tree = new binarySearch();
 
@@ -77,14 +123,28 @@ function printNode(value){
 	console.log(value);
 }
 
+tree.insert(11);
 tree.insert(7);
 tree.insert(15);
 tree.insert(5);
 tree.insert(3);
 tree.insert(9);
-tree.inOrderTraverse(printNode);
-tree.preOrderTraverse(printNode);
-tree.postOrderTraverse(printNode);
+tree.insert(8);
+tree.insert(10);
+tree.insert(13);
+tree.insert(12);
+tree.insert(14);
+tree.insert(20);
+tree.insert(18);
+tree.insert(25);
+tree.insert(6);
+//tree.inOrderTraverse(printNode);
+//tree.preOrderTraverse(printNode);
+//tree.postOrderTraverse(printNode);
+console.log(tree.min());
+console.log(tree.max());
+console.log(tree.search(1));
+console.log(tree.search(8));
 
 
 
